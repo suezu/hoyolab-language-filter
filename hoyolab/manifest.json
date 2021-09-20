@@ -1,12 +1,12 @@
 {
   "name": "Hoyolab Language Filter",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "manifest_version": 2,
   "description": "この拡張機能はhoyolabのホームの中から英語の記事を非表示にします",
   "content_scripts": [
     {
       "matches": [
-        "https://www.hoyolab.com/home*"
+        "https://www.hoyolab.com/*"
       ],
       "js": [
         "content.js"
@@ -19,8 +19,11 @@
     ],
     "persistent": false
   },
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
   "permissions": [
-    "contextMenus",
-    "activeTab"
+    "tabs",
+    "storage"
   ]
 }

@@ -14,7 +14,7 @@ function includeJa(text) {
       return true;
     if (regexKanji.test(text))
       return true;
-    return false;      
+    return false;
   } catch (error) {
     console.error(error);
     return true;
@@ -25,7 +25,8 @@ function callback(mutations) {
   const elements = document.getElementsByClassName('mhy-article-card');
 
   for (let i = 0; i < elements.length; i++) {
-    const titleHeads = elements[i].getElementsByClassName('mhy-article-card__title');
+    const titleHeads = elements[i]
+      .getElementsByClassName('mhy-article-card__title');
     const title = titleHeads[0].innerText;
 
     if (!includeJa(title))
@@ -35,17 +36,30 @@ function callback(mutations) {
 
 const mutationObserver = new MutationObserver(callback);
 const target = document.body;
-const option = {
-  childList: true, subtree: true
-};
-mutationObserver.observe(target, option);
+const option = { childList: true, subtree: true };
 
-chrome.runtime.onMessage.addListener((request, sender) => {
-  if (request.jaFilterEnabled) {
+chrome.runtime.sendMessage({ method: 'getItem' }, (response) => {
+  const jaFilterJson = response.value;
+  const jaFilter = jaFilterJson ? JSON.parse(jaFilterJson) : { enabled: true };
+
+  if (jaFilter.enabled) {
     mutationObserver.observe(target, option);
-    console.log("Japanese language filter enabled.")
   } else {
     mutationObserver.disconnect();
-    console.log("Japanese language filter disabled.")
+  }
+});
+
+chrome.runtime.onMessage.addListener((request, sender) => {
+  chrome.runtime.sendMessage({
+    method: 'setItem',
+    value: JSON.stringify({ enabled: request.jaFilterEnabled })
+  });
+
+  if (request.jaFilterEnabled) {
+    mutationObserver.observe(target, option);
+    console.log('Japanese language filter enabled.');
+  } else {
+    mutationObserver.disconnect();
+    console.log('Japanese language filter disabled.');
   }
 });

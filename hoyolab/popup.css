@@ -1,0 +1,15 @@
+.main {
+  width: 200px;
+}
+
+.radio {
+  display: inline-block;
+}
+
+.radio > input {
+  cursor: pointer;
+}
+
+.radio > label {
+  cursor: pointer;
+}
