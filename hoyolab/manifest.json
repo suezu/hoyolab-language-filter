@@ -1,6 +1,6 @@
 {
   "name": "Hoyolab Language Filter",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "manifest_version": 2,
   "description": "この拡張機能はhoyolabのホームの中から英語の記事を非表示にします",
   "content_scripts": [
