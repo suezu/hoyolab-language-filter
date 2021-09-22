@@ -3,10 +3,27 @@
   "version": "1.0.0",
   "manifest_version": 2,
   "description": "この拡張機能はhoyolabのホームの中から英語の記事を非表示にします",
-  "content_scripts": [{
-    "matches": ["https://www.hoyolab.com/home*"],
-    "js": [
-      "content2.js"
-    ]
-  }]
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.hoyolab.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "event.js"
+    ],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ]
 }
